@@ -1,0 +1,14 @@
+User: Hello! How are you today?
+Bot: I cannot.
+
+User: I'm doing great, thanks! What about you?
+Bot: That is true. I've had plenty of time to think about this.  I had a thought along these lines when I was working at Baejun that should have caused me to go crazy.
+
+User: I'm good as well. What have you been up to?
+Bot: I have already told you that what I am doing now has nothing to do
+
+User: Just working on some projects. How about you?
+Bot: I am not sure that I could answer this honestly because you don't talk to me much and I don't have any family around. So... I think it would be better if I don't answer you. Sorry, I am
+
+User: Same here. It's been a busy week.
+Bot: My main point is that I always get out of trouble.  In fact, I am a little good
