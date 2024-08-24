@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Gas Molecule Simulation</title>
+    <style>
+        body { 
+            margin: 0; 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            background-color: #f0f0f0;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+        #temperatureLabel {
+            margin-top: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+        #explanationBox {
+            margin-left: 20px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #fff;
+            max-width: 300px;
+            position: absolute;
+            top: 0;
+            right: -320px; /* Adjust according to the width of the explanation box */
+        }
+        #explanationBox h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="simulationCanvas"></canvas>
+        <div id="temperatureLabel">Temperature: Calculating...</div>
+        <div id="explanationBox">
+            <h2>Kinetic Theory of Gases</h2>
+            <p>The temperature of an ideal gas is related to the average kinetic energy of its molecules. According to the kinetic theory of gases:</p>
+            <p><b>Average Kinetic Energy:</b> <br>
+               <code>K = 1/2 m (v<sub>x</sub><sup>2</sup> + v<sub>y</sub><sup>2</sup>)</code>
+            </p>
+            <p><b>Temperature:</b> <br>
+               <code>T = (2/3) (K<sub>avg</sub> / k<sub>B</sub>)</code>
+            </p>
+            <p>Where:</p>
+            <ul>
+                <li>K<sub>avg</sub> = average kinetic energy of the gas molecules</li>
+                <li>k<sub>B</sub> = Boltzmann constant (1.38 × 10<sup>-23</sup> J/K)</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth * 0.7; // Adjust width to leave space for explanation box
+        canvas.height = window.innerHeight * 0.7;
+
+        const numMolecules = 100;
+        const molecules = [];
+        const radius = 5;  // Radius of each molecule
+        const vanDerWaalsA = 0.1; // Van der Waals constant A (attraction strength)
+        const vanDerWaalsB = 0.02; // Van der Waals constant B (volume correction)
+        const heliumMass = 6.64e-27; // Mass of helium atom in kg
+        const k_B = 1.38e-23; // Boltzmann constant in J/K
+
+        // Molecule class
+        class Molecule {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Wall collisions
+                if (this.x < radius || this.x > canvas.width - radius) this.vx *= -1;
+                if (this.y < radius || this.y > canvas.height - radius) this.vy *= -1;
+
+                // Apply Van der Waals forces
+                this.applyVanDerWaalsForces();
+            }
+
+            applyVanDerWaalsForces() {
+                for (let other of molecules) {
+                    if (other === this) continue;
+                    let dx = this.x - other.x;
+                    let dy = this.y - other.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let minDist = 2 * radius;
+
+                    if (distance < minDist) {
+                        // Simplified Van der Waals force calculation
+                        let force = (24 * vanDerWaalsA * ((2 / distance) ** 12 - (1 / distance) ** 6))
+                                   - (2 * vanDerWaalsB * (1 / distance) ** 3);
+                        let fx = force * (dx / distance);
+                        let fy = force * (dy / distance);
+
+                        this.vx -= fx;
+                        this.vy -= fy;
+                        other.vx += fx;
+                        other.vy += fy;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'blue';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        // Initialize molecules
+        for (let i = 0; i < numMolecules; i++) {
+            let x = Math.random() * (canvas.width - 2 * radius) + radius;
+            let y = Math.random() * (canvas.height - 2 * radius) + radius;
+            molecules.push(new Molecule(x, y));
+        }
+
+        function calculateTemperature() {
+            let totalKineticEnergy = 0;
+
+            for (let molecule of molecules) {
+                const vx2 = molecule.vx * molecule.vx;
+                const vy2 = molecule.vy * molecule.vy;
+                totalKineticEnergy += 0.5 * heliumMass * (vx2 + vy2);
+            }
+
+            const averageKineticEnergy = totalKineticEnergy / numMolecules;
+            const temperature = (2 / 3) * (averageKineticEnergy / k_B);
+            return temperature;
+        }
+
+        function updateTemperatureLabel() {
+            const temperature = calculateTemperature();
+            const label = document.getElementById('temperatureLabel');
+            label.textContent = `Temperature: ${temperature.toFixed(2)} K`;
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let molecule of molecules) {
+                molecule.update();
+                molecule.draw();
+            }
+
+            updateTemperatureLabel();
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

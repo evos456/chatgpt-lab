@@ -1,0 +1,15 @@
+The first prompt I used was:
+
+Example Prompt: create a physics simulation in java script of container full of gas molecules. The molecules should be simple diatomic helium gas molecules. Also in addition to collision physics also add corrections for van der wals forces and apply distortion to the mechanics of the molecules based on these forces
+
+
+
+Example Prompt: create a simple 2D demonstration of the above in java script to the level of complexity that you can code
+
+
+Example Prompt: using the mass of the helium nucleus, and the speeds of the gas molecules, have label that outputs the temperature of the box at any instant. Use statistical mechanics to calculate the temperature
+
+
+Example Prompt: update above code to add the label in html below the gas container. To the right of the gas container have a small box that explains the kinetic theory of gases and have the relavent equation below it
+
+final prompt: merge all the code into one html file
