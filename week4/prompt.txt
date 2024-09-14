@@ -9,17 +9,3 @@ create a election campaign with 2 goals choose audience of age over 18, 5 key me
 create a election campaign for youth leader in university steps in 30 lines 4 key messages 3 goals target audience is 18 to  25. consider 3 legal and ethical considerations. 3 social media platforms for distribution using pamphlet's, hashtag, event rallies using bike or car.
 -------------------------------------------------------------------------------------------------------------
 
-1. Late Delivery?
-   10% discount
-
-2. Damaged Goods
-   50% discount on the bill amount.
-
-3. Incorrect Item
-   Give Full refund or 0 Bill amount.
-
-4. Package left in unsafe Location
-   Give Full refund
-
-5. Partial Delivery
-   50% discount and need to give the product.
