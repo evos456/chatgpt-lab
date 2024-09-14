@@ -1,0 +1,16 @@
+
+
+1. Late Delivery?
+   10% discount
+
+2. Damaged Goods
+   50% discount on the bill amount.
+
+3. Incorrect Item
+   Give Full refund or 0 Bill amount.
+
+4. Package left in unsafe Location
+   Give Full refund
+
+5. Partial Delivery
+   50% discount and need to give the full delivery.
