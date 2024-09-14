@@ -1,0 +1,19 @@
+import tensorflow as tf
+
+# Input from the user
+try:
+    number1 = float(input("Enter the first number: "))
+    number2 = float(input("Enter the second number: "))
+
+    # Define tensors for the numbers
+    num1 = tf.constant(number1, dtype=tf.float32)
+    num2 = tf.constant(number2, dtype=tf.float32)
+
+    # Perform addition
+    result = tf.add(num1, num2)
+
+    # Print the result
+    print(f"The sum of {number1} and {number2} is {result.numpy()}")
+
+except ValueError:
+    print("Please enter valid numbers.")

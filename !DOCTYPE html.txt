@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Simulation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gasContainer" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gasContainer');
+        const ctx = canvas.getContext('2d');
+
+        const numParticles = 50; // Number of diatomic molecules
+        const particles = [];
+        const containerWidth = canvas.width;
+        const containerHeight = canvas.height;
+        const radius = 5; // Radius of each particle
+        const kB = 1.38e-23; // Boltzmann constant
+        const temperature = 300; // Kelvin
+        const mass = 4e-26; // Mass of a helium molecule (approx)
+        const epsilon = 10; // Depth of the potential well
+        const sigma = 3.4e-10; // Finite distance where the inter-particle potential is zero
+
+        // Utility function to get random velocity based on temperature
+        function randomVelocity() {
+            const v = Math.sqrt((2 * kB * temperature) / mass);
+            return v * (Math.random() - 0.5);
+        }
+
+        // Particle class
+        class Particle {
+            constructor(x, y, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+            }
+
+            update() {
+                // Update positions
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Check for collisions with walls
+                if (this.x - radius < 0 || this.x + radius > containerWidth) {
+                    this.vx *= -1;
+                }
+                if (this.y - radius < 0 || this.y + radius > containerHeight) {
+                    this.vy *= -1;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'blue';
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            applyVanDerWaalsForce(other) {
+                const dx = other.x - this.x;
+                const dy = other.y - this.y;
+                const r2 = dx * dx + dy * dy;
+                const r6 = r2 * r2 * r2;
+                const forceMagnitude = (24 * epsilon / r2) * ((2 * (sigma ** 12) / r6 ** 2) - (sigma ** 6 / r6));
+                const fx = forceMagnitude * dx;
+                const fy = forceMagnitude * dy;
+
+                this.vx += fx / mass;
+                this.vy += fy / mass;
+            }
+        }
+
+        // Initialize particles with random positions and velocities
+        for (let i = 0; i < numParticles; i++) {
+            const x = Math.random() * (containerWidth - 2 * radius) + radius;
+            const y = Math.random() * (containerHeight - 2 * radius) + radius;
+            const vx = randomVelocity();
+            const vy = randomVelocity();
+            particles.push(new Particle(x, y, vx, vy));
+        }
+
+        // Main simulation loop
+        function simulate() {
+            ctx.clearRect(0, 0, containerWidth, containerHeight);
+
+            // Update and draw each particle
+            for (let i = 0; i < numParticles; i++) {
+                for (let j = i + 1; j < numParticles; j++) {
+                    particles[i].applyVanDerWaalsForce(particles[j]);
+                }
+                particles[i].update();
+                particles[i].draw();
+            }
+
+            requestAnimationFrame(simulate);
+        }
+
+        simulate();
+    </script>
+</body>
+</html>
