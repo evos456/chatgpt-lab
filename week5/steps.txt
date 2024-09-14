@@ -1,0 +1,23 @@
+step 1: Go to google. open chatbase. login with gmail account
+
+step 2: Create a Team (name it)
+
+step 3: click on create chatbot
+
+step 4: go to Sources --> website (example: swiggy.com)
+
+step 5: once links are fetched see that links are less than 10. click on Create (Train) ChatBot
+
+step 6: click on settings --> Click on AI (Tab)
+
+step 7: change the drop down AI to Customer Support Agent and copy paste the 5 queries and solutions content under primary role option.
+
+step 8: Click on Save.
+
+Step 9: Go to Playground.
+
+step 10: Enter the prompt or question. like late delivery what is the discount? get an answer.
+
+step 11: OUTPUT: write or Take a print out of all 5 prompts.
+
+ 
