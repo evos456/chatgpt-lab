@@ -1,0 +1,19 @@
+Experiment 7 : Execute a Python Code Cleaning.
+
+Step 1: Use chatgpt and Deliberately, Write a bad/incorrect/wrong 		program Code in Python.
+
+Step 2: Check for Mistakes/Errors/Issues.
+
+Step 3: Now, Ask chatgpt to  write correct program.
+
+Step 4: Now ask chatgpt to do 
+	Naming conventions, 
+	Formatting and styling, 
+	optimization
+	Documentation, 
+	Testing, 
+	Refactoring, 
+	code review, 	
+	continuous integration, 
+	Linters 
+	Error Handling.
