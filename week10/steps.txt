@@ -1,0 +1,12 @@
+1) Choose a topic .write Introduction of topic
+2)Give me problem statement on the topic
+3) give me  most important research hypothesis on the topic
+4) Give me important questions on the topic
+5) Suggest Research objective for above
+6) give me significance of above topic 
+7) give me latest reviews on topic
+8) help me formulate Research methodologies for above topic
+9) Give 10 references of any ieee/ scope journals of above topic
+
+
+prompt- write a research paper on topic include any finding and graphs use sample data. Give 10 references to ieee research papers also restrict the number of words to 300 words and make it so that readable by a school student 
